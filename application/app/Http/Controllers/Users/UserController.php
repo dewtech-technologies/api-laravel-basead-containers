@@ -2,25 +2,23 @@
 
 namespace App\Http\Controllers\Users;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Services\UserService;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+    protected $userService;
+
+    public function __construct(UserService $userService) {
+        $this->userService = $userService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return $this->userService->getAll();
     }
 
     /**
@@ -28,7 +26,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $this->userService->create($request);
     }
 
     /**
@@ -36,15 +34,15 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return $this->userService->getById($id);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function getById(string $id)
     {
-        //
+        return $this->userService->getById($id);
     }
 
     /**
@@ -52,7 +50,7 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        return $this->userService->update($id, $request);
     }
 
     /**
@@ -60,6 +58,6 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return $this->userService->delete($id);
     }
 }
