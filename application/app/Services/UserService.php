@@ -26,7 +26,7 @@ class UserService {
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->remember_token = $request->remember;
+        $user->remember_token = Hash::make($request->remember_token);
         $user->save();
         return $user;
     }
