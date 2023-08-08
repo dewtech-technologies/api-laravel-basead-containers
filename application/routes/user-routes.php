@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Users\UserController;
+use App\Http\Controllers\Auth\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,12 @@ use App\Http\Controllers\Users\UserController;
 */
 
 Route::prefix('/v1/dewtech')->group(function () {
+    // Rota de login
+    Route::post('/login', [AuthController::class, 'login']);
+
+    // Rota de login JWT (não protegida por autenticação)
+    Route::post('/loginJwt', [AuthController::class, 'loginJwt']);
+
     Route::prefix('/user')->group(function () {
         Route::get('/', [UserController::class, 'index']);
         Route::post('/', [UserController::class, 'store']);
