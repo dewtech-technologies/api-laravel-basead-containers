@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Repositories\UserRepository;
-use Illuminate\Support\Facades\Hash;
 
 class UserService {
 
@@ -22,15 +21,8 @@ class UserService {
         return $this->userRepository->getById($id);
     }
     public function create($request) {
-        $user = new User;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->remember_token = Hash::make($request->remember_token);
-        $user->save();
-        return $user;
+        return $this->userRepository->create($request);
     }
-
     public function update($id, $attributes) {
         return $this->userRepository->update($id, $attributes);
     }
