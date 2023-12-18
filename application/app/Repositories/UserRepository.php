@@ -26,7 +26,14 @@ class UserRepository
 
     public function getById($id)
     {
-        return $this->users->find($id);
+        $model = $this->users->find($id);
+
+        if (!$model) {
+            // Se o modelo não foi encontrado, retornamos uma resposta com status 404 (não encontrado).
+            return response()->json(['message' => 'Usuário não encontrado'], 404);
+        }
+
+        return $model;
     }
     public function create($request)
     {
@@ -81,7 +88,9 @@ class UserRepository
 
     public function delete($id)
     {
-        return $this->users->find($id)->delete();
+        if($this->users->find($id)->delete()){
+            return response()->json(['message' => 'Usuário deletado com sucesso'], 200);
+        }
     }
 
 }
